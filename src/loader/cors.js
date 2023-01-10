@@ -1,5 +1,5 @@
-var express = require('express');
 var cors = require('cors');
-var app = express();
 
-module.exports = app.use(cors());
+module.exports = (app) => {
+    app.use(cors())
+};
