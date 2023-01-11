@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const studentRoute = require('../routes/student');
 const classRoute = require('../routes/class');
 const subjectRoute = require('../routes/subject');
+const teacherRoute = require('../routes/teacher');
 
 module.exports = (app) => {
     // bodyParser
@@ -15,4 +16,5 @@ module.exports = (app) => {
     app.use('/student', studentRoute);
     app.use('/class', classRoute);
     app.use('/subject', subjectRoute);
+    app.use('/teacher', teacherRoute);
 };

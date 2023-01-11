@@ -26,10 +26,14 @@ const teacherSchema = new mongoose.Schema({
         require: true
     },
     class: {
-        type: "",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SchoolClass",
+        require: true
     },
     subject: {
-        type: ""
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject",
+        require: true
     }
 }, { timestamps: true });
 
