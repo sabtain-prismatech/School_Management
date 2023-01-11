@@ -26,12 +26,12 @@ const teacherSchema = new mongoose.Schema({
         require: true
     },
     class: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "SchoolClass",
         require: true
     },
     subject: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "Subject",
         require: true
     }
