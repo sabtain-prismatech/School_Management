@@ -32,7 +32,7 @@ const addTeacher = async (req, res) => {
         )
     } catch (error) {
         res.status(404).json(
-            responseStatus(false, 'not-found', `unexpected Error ${error}`)
+            responseStatus(false, 'not-found', `${error}`)
         )
     }
 }

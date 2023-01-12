@@ -80,6 +80,35 @@ const deleteClass = async (req, res) => {
 }
 
 
+// get-student-by-class-id
+
+const getStudentByClassId = async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+        const finalData = await SchoolClass.aggregate([
+            {
+                $lookup: {
+                    from: "students",
+                    localField: "_id",
+                    foreignField: "schoolClass",
+                    as: "students",
+                },
+            }
+        ])
+        res.status(200).json({
+            status: 200,
+            message: 'success',
+            data: finalData
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            message: `Unexpected Error ${error}`
+        })
+    }
+}
 
 
-module.exports = { getAllClasses, createClass, updateClass, deleteClass };
+
+module.exports = { getAllClasses, createClass, updateClass, deleteClass, getStudentByClassId };
