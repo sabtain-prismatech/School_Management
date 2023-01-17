@@ -1,4 +1,8 @@
 const SchoolClass = require('../models/class');
+// status-helper
+const responseStatus = require('../helpers/status');
+const { default: mongoose } = require('mongoose');
+
 
 // get-all-classess
 const getAllClasses = async (req, res) => {
@@ -110,5 +114,53 @@ const getStudentByClassId = async (req, res) => {
 }
 
 
+// get-teacher-by-class-id
+const getTeacherByClassId = async (req, res) => {
+    try {
+        const findTeacher = await SchoolClass.aggregate([
+            {
+                $lookup: {
+                    from: "teachers",
+                    localField: "_id",
+                    foreignField: "class",
+                    as: "teachers",
+                }
+            }
+        ])
+        res.status(200).json(
+            responseStatus(true, 'ok', "Success", findTeacher)
+        )
+    } catch (error) {
+        res.status(404).json(
+            responseStatus(false, 'not-found', `unexpected Error ${error}`)
+        )
+    }
+}
 
-module.exports = { getAllClasses, createClass, updateClass, deleteClass, getStudentByClassId };
+// get-teacher-by-class-id
+const getSingleClassTeacherByClassId = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const findTeacher = await SchoolClass.aggregate([
+            { $match: { _id: mongoose.Types.ObjectId(id) } },
+            {
+                $lookup: {
+                    from: "teachers",
+                    localField: "_id",
+                    foreignField: "class",
+                    as: "teachers",
+                }
+            },
+        ])
+        res.status(200).json(
+            responseStatus(true, 'ok', "Success", findTeacher)
+        )
+    } catch (error) {
+        res.status(404).json(
+            responseStatus(false, 'not-found', `unexpected Error ${error}`)
+        )
+    }
+}
+
+
+module.exports = { getAllClasses, createClass, updateClass, deleteClass, getStudentByClassId, getTeacherByClassId, getSingleClassTeacherByClassId };
