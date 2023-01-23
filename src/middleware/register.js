@@ -7,7 +7,6 @@ const middleRegister = async (req, res, next) => {
     try {
         const { email, password, confirmPassword } = req.body;
         const findEmail = await Register.findOne({ email });
-        console.log(findEmail);
         if (findEmail) {
             res.status(409).json(
                 responseStatus(false, 'conflict', "Email already exist.")
